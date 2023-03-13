@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Estoque</title>
+</head>
+<body>
+<div>
+    <h1>Clientes</h1>
+    <hr/>
+    <div>
+        <a href="@{/clientes/novo}">Novo</a>
+    </div>
+    <hr/>
+    <table>
+        <thead>
+        <tr>
+            <td><strong>NOME</strong></td>
+            <td><strong>DATA NASCIMENTO</strong></td>
+            <td><strong>CPF</strong></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cliente: ${clientes}">
+            <td th:text="${cliente.nome}"></td>
+            <td th:text="${cliente.dataDeNascimento}"></td>
+            <td th:text="${cliente.cpf}"></td>
+            <td>
+                <a th:href="@{/clientes/edita/{id}(id=${cliente.id})}">Editar</a>
+            </td>
+            <td>
+                <a th:if="${cliente.ativo == false}" th:href="@{/clientes/ativa/{id}(id=${cliente.id})}">Ativar</a>
+                <a th:unless="${cliente.ativo == false}" th:href="@{/clientes/inativa/{id}(id=${cliente.id})}">Inativa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
