@@ -2,7 +2,6 @@ package br.com.spring.controller;
 
 import br.com.spring.bo.ClienteBO;
 import br.com.spring.model.Cliente;
-import org.hibernate.annotations.common.reflection.XMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
