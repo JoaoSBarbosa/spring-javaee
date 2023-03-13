@@ -1,7 +1,7 @@
 package br.com.spring.model;
 import java.time.LocalDate;
 
-import org.hibernate.validator.constraints.br.CPF;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,8 +23,7 @@ public class Cliente {
     @Size(min = 3, max=50)
     private String nome;
 
-    @Column(length = 14)
-    @CPF(message = "CPF inválido")
+    @Column(length = 11)
     private String cpf;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
