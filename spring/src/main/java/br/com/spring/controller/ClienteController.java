@@ -51,4 +51,28 @@ public class ClienteController {
         }
         return new ModelAndView("/cliente/formulario",model);
     }
+    @RequestMapping(value = "/inativa/{id}", method = RequestMethod.GET)
+    public String inativa(@PathVariable("id") Long id){
+
+        try{
+            Cliente cliente = bo.pesquisaPeloId(id);
+            bo.inativa(cliente);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "redirect:/clientes";
+    }
+
+    @RequestMapping(value = "/ativa/{id}", method = RequestMethod.GET)
+    public String ativa(@PathVariable("id") Long id){
+
+        try{
+            Cliente cliente = bo.pesquisaPeloId(id);
+            bo.ativa(cliente);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "redirect:/clientes";
+    }
+
 }
