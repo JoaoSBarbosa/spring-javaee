@@ -32,7 +32,7 @@ public class Fornecedor {
     private String telefone;
 
     @Column(length = 15)
-    private String celualar;
+    private String celular;
 
     @Column(length = 50)
     @Email
@@ -79,12 +79,12 @@ public class Fornecedor {
         this.telefone = telefone;
     }
 
-    public String getCelualar() {
-        return celualar;
+    public String getCelular() {
+        return celular;
     }
 
-    public void setCelualar(String celualar) {
-        this.celualar = celualar;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
     public String getEmail() {
