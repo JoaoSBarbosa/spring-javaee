@@ -42,7 +42,7 @@ public class ClienteController {
             attr.addFlashAttribute("feedback", "Cliente foi atualizado com sucesso");
         }
         return "redirect:/clientes/";
-//        return ("/cliente/formulario");
+//
     }
 
     //Método para listar
