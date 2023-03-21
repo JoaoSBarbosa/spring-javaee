@@ -2,12 +2,15 @@ package br.com.spring.controller;
 
 import br.com.spring.bo.FornecedorBO;
 import br.com.spring.bo.NotaEntradaBO;
+import br.com.spring.bo.ProdutoBO;
 import br.com.spring.model.NotaEntrada;
+import br.com.spring.model.NotaEntradaItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +25,9 @@ public class NotaEntradaController {
     private NotaEntradaBO notaEntradaBO;
     @Autowired
     private FornecedorBO fornecedorBO;
+
+    @Autowired
+    private ProdutoBO produtoBO;
     @RequestMapping(value = "/novo", method = RequestMethod.GET)
     public ModelAndView novo(ModelMap model){
         Long fornecedorId = null;
@@ -48,10 +54,20 @@ public class NotaEntradaController {
         return "redirect:/nota-entrada";
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value="", method=RequestMethod.GET)
     public ModelAndView lista(ModelMap model) {
         model.addAttribute("notas", notaEntradaBO.listaTodos());
         return new ModelAndView("/nota-entrada/lista", model);
     }
+    @RequestMapping(value="/{id}/item", method=RequestMethod.GET)
+    public ModelAndView produto(@PathVariable("id") Long id, ModelMap model) {
+        NotaEntradaItem nei = new NotaEntradaItem();
+        NotaEntrada ne = notaEntradaBO.pesquisaPeloId(id);
+        nei.setNotaEntrada(ne);
+        model.addAttribute("notaEntradaItem", nei);
+        model.addAttribute("produtos", produtoBO.listaTodos());
+        return new ModelAndView("/nota-entrada-item/formulario", model);
+    }
+
 
 }
