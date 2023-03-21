@@ -47,4 +47,11 @@ public class NotaEntradaController {
         }
         return "redirect:/nota-entrada";
     }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ModelAndView lista(ModelMap model) {
+        model.addAttribute("notas", notaEntradaBO.listaTodos());
+        return new ModelAndView("/nota-entrada/lista", model);
+    }
+
 }
