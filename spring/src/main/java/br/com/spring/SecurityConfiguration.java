@@ -15,7 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public static BCryptPasswordEncoder passwordEncoder(){
+    public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -23,32 +23,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                    .withUser("admin")
-                    .password(passwordEncoder().encode("12345"))
-                    .roles("ADMINISTRADOR")
+                .withUser("admin")
+                .password(passwordEncoder().encode("12345"))
+                .roles("ADMINISTRADOR")
                 .and()
-                    .withUser("user")
-                    .password(passwordEncoder().encode("12345"))
-                    .roles("USUARIO");
+                .withUser("user")
+                .password(passwordEncoder().encode("12345"))
+                .roles("USUARIO");
     }
 
     @Override
-    protected  void configure(final HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.GET, "/nota-entrada").hasRole("ADMINISTRADOR")
-                    .antMatchers(HttpMethod.GET, "/nota-saida").hasRole("ADMINISTRADOR")
-                    .antMatchers(HttpMethod.GET, "/estoque").hasRole("ADMINISTRADOR")
+                .antMatchers("/api/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/nota-entrada").hasRole("ADMINISTRADOR")
+                .antMatchers(HttpMethod.GET, "/nota-saida").hasRole("ADMINISTRADOR")
+                .antMatchers(HttpMethod.GET, "/estoque").hasRole("ADMINISTRADOR")
                 .anyRequest()
-                    .authenticated()
+                .authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                    .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login");
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .and()
+                .cors()
+                .and()
+                .csrf()
+                .disable();
     }
-
 }

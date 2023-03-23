@@ -1,6 +1,5 @@
 package br.com.spring.dao;
 
-import br.com.spring.model.Produto;
 import br.com.spring.model.ProdutoEstoque;
 import org.springframework.stereotype.Repository;
 
@@ -15,31 +14,32 @@ import java.util.List;
 public class ProdutoEstoqueDAO implements CRUD<ProdutoEstoque, Long> {
 
     @PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
 
     @Override
     public ProdutoEstoque pesquisaPeloId(Long id) {
-        return em.find(ProdutoEstoque.class, id);
+        return entityManager.find(ProdutoEstoque.class, id);
     }
 
     @Override
     public List<ProdutoEstoque> listaTodos() {
-        Query query = em.createQuery("select pe from ProdutoEstoque  pe");
+        Query query = entityManager.createQuery("select pe from ProdutoEstoque pe");
         return query.getResultList();
     }
 
     @Override
-    public void insere(ProdutoEstoque produtoEstoque) {
-        em.persist(produtoEstoque);
+    public void insere(ProdutoEstoque pe) {
+        entityManager.persist(pe);
     }
 
     @Override
-    public void atualiza(ProdutoEstoque produtoEstoque) {
-        em.merge(produtoEstoque);
+    public void atualiza(ProdutoEstoque pe) {
+        entityManager.merge(pe);
     }
 
     @Override
-    public void remove(ProdutoEstoque produtoEstoque) {
-        em.remove(produtoEstoque);
+    public void remove(ProdutoEstoque pe) {
+        entityManager.remove(pe);
     }
+
 }
